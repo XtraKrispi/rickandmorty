@@ -22,6 +22,7 @@ type AppStyle
     | Divider
     | AppLink
     | CloseButton
+    | IconStyle
 
 
 type NavBarStyle
@@ -121,7 +122,8 @@ stylesheet =
                 ]
             ]
         , style (Character Pager)
-            [ SColor.background <| Color.rgba 100 100 100 0.5
+            [ font
+            , SColor.background <| Color.rgba 100 100 100 0.5
             , cursor "pointer"
             , Transition.all
             , hover
@@ -146,4 +148,5 @@ stylesheet =
         , style (Character Label) [ prop "word-wrap" "break-word" ]
         , style AppLink [ cursor "pointer", underline ]
         , style CloseButton [ cursor "pointer" ]
+        , style IconStyle [ typeface [ Font.font "FontAwesome" ] ]
         ]

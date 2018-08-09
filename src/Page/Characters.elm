@@ -6,14 +6,16 @@ import Element exposing (..)
 import Element.Attributes exposing (..)
 import Element.Events exposing (..)
 import Element.Input as Input
+import Html
+import Html.Attributes
 import Http exposing (get, send)
 import Json.Decode as Json exposing (Decoder, andThen, at, int, list, map2, nullable, string, succeed)
 import Json.Decode.Pipeline exposing (..)
 import Keyboard exposing (downs)
 import RemoteData exposing (RemoteData(..), WebData)
+import Task
 import Time exposing (second)
 import Utils exposing (loadingIndicator)
-import Task
 
 
 type Status
@@ -464,6 +466,11 @@ isJust m =
             False
 
 
+icon : String -> Element AppStyle variation msg
+icon iconClass =
+    node "i" (el IconStyle [ class "fa", class iconClass ] empty)
+
+
 pager : PageInfo r -> Element AppStyle Variation Msg
 pager pageInfo =
     row NoStyle
@@ -477,7 +484,7 @@ pager pageInfo =
                     , height (px 200)
                     , onClick PreviousPage
                     ]
-                    (el NoStyle [ verticalCenter, center ] (text "<< Prev"))
+                    (el NoStyle [ verticalCenter, center ] (row NoStyle [] [ icon "fa-chevron-left", text "Prev" ]))
         , when (isJust pageInfo.nextPage) <|
             screen <|
                 el (AppStyle.Character Pager)
@@ -487,7 +494,7 @@ pager pageInfo =
                     , height (px 200)
                     , onClick NextPage
                     ]
-                    (el NoStyle [ verticalCenter, center ] (text "Next >>"))
+                    (el NoStyle [ verticalCenter, center ] (row NoStyle [] [ text "Next", icon "fa-chevron-right" ]))
         ]
 
 
